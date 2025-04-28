@@ -1,0 +1,24 @@
+function example() begin
+    var a, b, c, x, y, z;
+
+    a := 0;
+    b := 10;
+    c := 3;
+    x := 8;
+    y := 2;
+
+    while a < b do
+        if c < 5 then
+            while x > y do
+                z := x + 1;
+                x := x - 1;
+            end while
+        else
+            x := y;
+        end if;
+
+        a := a + 1;
+    end while
+
+    return z;
+end
