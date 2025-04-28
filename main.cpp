@@ -1,12 +1,9 @@
-#include "lexer.h"
+#include <lexer/lexer.h>
 #include <cstdio>
 
 int main(int argc, char *argv[]) {
-  FILE *fp = fopen(argc > 1 ? argv[1] : "example_code", "r");
+  FILE *fp = fopen(argv[1], "r");
   if (!fp) { perror("fopen"); return 1; }
-
-  /* ensure ch has an initial value */
-  int ch = fgetc(fp);
 
   Token tk;
   do {
