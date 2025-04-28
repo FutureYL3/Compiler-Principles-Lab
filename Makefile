@@ -1,14 +1,29 @@
-CC      = g++
-CFLAGS  = -std=c++17 -Wall -O2
+CXX     := g++
+CXXFLAGS:= -std=c++17 -Wall -O2
 
-OBJ     = main.o lexer.o
-DEPS    = token.h lexer.h
 
-lexer.o : lexer.cpp $(DEPS)
-main.o  : main.cpp  $(DEPS)
+SRCS    := $(shell find . -name '*.cpp')
+BUILDDIR:= build
+OBJS    := $(patsubst %.cpp,$(BUILDDIR)/%.o,$(SRCS))
+TARGET  := $(BUILDDIR)/compiler
 
-compiler: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
 
+DEPS    := token.h lexer.h
+
+
+.PHONY: all
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+
+$(BUILDDIR)/%.o: %.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+
+.PHONY: clean
 clean:
-	rm -f *.o compiler
+	rm -rf $(BUILDDIR)
