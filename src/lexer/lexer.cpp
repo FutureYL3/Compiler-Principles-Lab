@@ -5,7 +5,7 @@
 
 /* ---------- global status variable ---------- */
 static int  ch      = ' ';   // current character
-static long line_no = 0;     // line number：start from 0
+static long line_no = 1;     // line number：start from 1
 static long col_no  = 0;     // column number：start from 0
 
 /* ---------- basic operation ---------- */
