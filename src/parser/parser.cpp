@@ -17,7 +17,7 @@ ParseResult parse(const std::vector<Token> &tk) {
     auto it = ACTION[s].find(a);
     if (it == ACTION[s].end()) {
       // error
-      std::cerr << "Syntax error at " << tk[ip].line << ":" << tk[ip].col << "\n";
+      std::cerr << "Syntax error at " << tk[ip].line << ":" << tk[ip].col << std::endl;
       return R;
     }
     Action act = it->second;

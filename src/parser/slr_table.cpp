@@ -40,30 +40,32 @@ bool build_slr(const FSet &FOLLOW) {
         if (itAct == ACTION[I].end()) {
           // 没有已有动作，安全插入 Reduce
           ACTION[I][a] = reduceAction;
-        } else {
+        } 
+        else {
           Action &cell = itAct->second;
           if (cell.tag == SHIFT) {
             if (a == TK_ELSE) {
               // 悬挂 Else：保留 SHIFT
-            } else {
-              std::cerr << "SLR conflict at state " << I
-                        << " on symbol " << a << ": Shift/Reduce\n";
+            } 
+            else {
+              std::cerr << "SLR conflict at state " << I << " on symbol " << a << ": Shift/Reduce" << std::endl;
               cell = {ERROR, 0};
               ok = false;
             }
-          } else if (cell.tag == REDUCE) {
+          } 
+          else if (cell.tag == REDUCE) {
             if (cell.param != reduceAction.param) {
-              std::cerr << "SLR conflict at state " << I
-                        << " on symbol " << a << ": Reduce/Reduce\n";
+              std::cerr << "SLR conflict at state " << I << " on symbol " << a << ": Reduce/Reduce" << std::endl;
               cell = {ERROR, 0};
               ok = false;
             }
-          } else if (cell.tag == ACCEPT) {
-            std::cerr << "SLR conflict at state " << I
-                      << " on symbol " << a << ": Action/Accept\n";
+          } 
+          else if (cell.tag == ACCEPT) {
+            std::cerr << "SLR conflict at state " << I << " on symbol " << a << ": Action/Accept" << std::endl;
             cell = {ERROR, 0};
             ok = false;
-          } else {
+          } 
+          else {
             // cell.tag == ERROR，覆盖插入
             cell = reduceAction;
           }

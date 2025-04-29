@@ -15,11 +15,10 @@ static void print_ast(const AST *n, int indent = 0) {
   }
   if (is_nonterm(n->symbol)) {
     int idx = n->symbol - NT_BASE;
-    const char *name = (idx >= 0 && idx < NONTERM_CNT)
-                       ? NONTERM_NAMES[idx]
-                       : "<UnknownNonterm>";
+    const char *name = (idx >= 0 && idx < NONTERM_CNT) ? NONTERM_NAMES[idx] : "<UnknownNonterm>";
     std::cout << name << "\n";
-  } else {
+  } 
+  else {
     std::cout << TOKEN_NAMES[n->symbol] << "\n";
   }
   for (const auto &c : n->child) {
@@ -72,8 +71,27 @@ int main(int argc, char *argv[]) {
   print_ast(R.root.get());
   std::cout << "=== Production sequence (bottom-up) ===\n";
   for (int p : R.prod_seq) {
-    std::cout << p << " ";
+    // 检查 p 是否在 G 的有效范围内 (可选但推荐)
+    if (p >= 0 && static_cast<size_t>(p) < G.size()) {
+      const auto& production = G[p]; // 获取产生式结构
+
+      // 打印左侧非终结符名称
+      std::cout << symbol_name(production.lhs) << " ->";
+
+      // 打印右侧符号名称
+      if (production.rhs.empty()) {
+          // 处理空产生式 (epsilon)
+          std::cout << " ε"; // 或者 " epsilon"
+      } else {
+          for (int symbol : production.rhs) {
+              std::cout << " " << symbol_name(symbol);
+          }
+      }
+      std::cout << std::endl; // 每个产生式换一行
+    } else {
+      std::cerr << "Warning: Invalid production index " << p << " in sequence." << std::endl;
+    }
   }
-  std::cout << "\n";
+  std::cout << std::endl;
   return 0;
 }

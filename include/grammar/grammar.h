@@ -11,7 +11,7 @@ enum {
   NT_FunctionList,
   NT_Function,
   NT_StmtList,
-  NT_Stmt,             // **删掉无用的 NT_StmtListTail**
+  NT_Stmt,
   NT_Block,
   NT_DeclStmt,
   NT_IdList,
@@ -20,8 +20,6 @@ enum {
   NT_ReturnStmt,
   NT_WhileStmt,
   NT_IfStmt,
-  // NT_Expr,
-  // NT_ExprRest,
   NT_Expr,           
   NT_ExprRest,       
   NT_RelExpr,        // 新增：关系表达式
