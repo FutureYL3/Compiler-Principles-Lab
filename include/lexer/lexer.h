@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#include "token.h"
+#include <lexer/token.h>
 #include <cstdio>
 
 #ifdef __cplusplus

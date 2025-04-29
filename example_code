@@ -12,13 +12,13 @@ function example() begin
             while x > y do
                 z := x + 1;
                 x := x - 1;
-            end while
+            end while;
         else
             x := y;
         end if;
 
         a := a + 1;
-    end while
+    end while;
 
     return z;
 end

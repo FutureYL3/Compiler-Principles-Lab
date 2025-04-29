@@ -1,0 +1,22 @@
+1.  AugStart        → Program
+2.  Program         → FunctionList
+3.  FunctionList    → Function FunctionList | ε
+4.  Function        → FUNCTION ID "(" ")" BEGIN StmtList END
+5.  StmtList        → Stmt OptSemiStmtList
+6.  OptSemiStmtList → ";" Stmt OptSemiStmtList | ";" | ε
+7.  Stmt            → DeclStmt | AssignStmt | WhileStmt | IfStmt | ReturnStmt | Block
+8.  Block           → BEGIN StmtList END
+9.  DeclStmt        → VAR IdList
+10. IdList          → ID IdRest
+11. IdRest          → "," ID IdRest | ε
+12. AssignStmt      → ID ":=" RelExpr
+13. ReturnStmt      → RETURN RelExpr
+14. WhileStmt       → WHILE RelExpr DO StmtList END WHILE
+15. IfStmt          → IF RelExpr THEN StmtList END IF | IF RelExpr THEN StmtList ELSE StmtList END IF
+16. Expr            → Term ExprRest
+17. ExprRest        → "+" Term ExprRest | "-" Term ExprRest | ε
+18. Term            → Factor TermRest
+19. TermRest        → "*" Factor TermRest | "/" Factor TermRest | ε
+20. Factor          → ID | INT_NUM | "(" RelExpr ")"
+21. RelExpr         → Expr RelRest
+22. RelRest         → "<"  Expr | ">"  Expr | "<=" Expr | ">=" Expr | "==" Expr | "!=" Expr | ε
