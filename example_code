@@ -8,6 +8,14 @@ function example() begin
     y := 2;
 
     while a < b do
+        if a != b then
+            a := 10;
+        end if;
+
+        if a < b then
+            b := x;
+        end if;
+
         if c < 5 then
             while x > y do
                 z := x + 1;

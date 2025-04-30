@@ -80,15 +80,17 @@ int main(int argc, char *argv[]) {
 
       // 打印右侧符号名称
       if (production.rhs.empty()) {
-          // 处理空产生式 (epsilon)
-          std::cout << " ε"; // 或者 " epsilon"
-      } else {
-          for (int symbol : production.rhs) {
-              std::cout << " " << symbol_name(symbol);
-          }
+        // 处理空产生式 (epsilon)
+        std::cout << " ε"; // 或者 " epsilon"
+      } 
+      else {
+        for (int symbol : production.rhs) {
+          std::cout << " " << symbol_name(symbol);
+        }
       }
       std::cout << std::endl; // 每个产生式换一行
-    } else {
+    } 
+    else {
       std::cerr << "Warning: Invalid production index " << p << " in sequence." << std::endl;
     }
   }
