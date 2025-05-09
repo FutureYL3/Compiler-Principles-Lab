@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <iostream>
 #include <iomanip>
+#include <set>
 
 /* 深度打印 AST */
 static void print_ast(const AST *n, int indent = 0) {
@@ -28,63 +29,109 @@ static void print_ast(const AST *n, int indent = 0) {
   }
 }
 
-// Function to print the ACTION and GOTO tables
+// Function to print the ACTION and GOTO tables in 2D format
 static void print_parsing_tables() {
-  std::cout << "\n=== ACTION Table ===\n";
-  for (size_t i = 0; i < ACTION.size(); ++i) {
-    if (ACTION[i].empty())  continue; // Skip states with no ACTION entries if desired, or print "State i: (empty)"
-    std::cout << "State " << i << ":\n";
-    for (const auto& entry : ACTION[i]) {
-      int terminal_symbol = entry.first;
-      const Action& action_obj = entry.second;
-      std::cout << "  ACTION[" << symbol_name(terminal_symbol) << "] = ";
-      switch (action_obj.tag) {
-        case SHIFT:
-          std::cout << "SHIFT " << action_obj.param;
-          break;
-        case REDUCE:
-          std::cout << "REDUCE " << action_obj.param << " (";
-          if (action_obj.param >= 0 && static_cast<size_t>(action_obj.param) < G.size()) {
-            const auto& prod = G[action_obj.param];
-            std::cout << symbol_name(prod.lhs) << " ->";
-            if (prod.rhs.empty()) {
-              std::cout << " ε";
-            } 
-            else {
-              for (int sym : prod.rhs) {
-                std::cout << " " << symbol_name(sym);
-              }
-            }
-          } 
-          else {
-            std::cout << "Invalid Production Index";
-          }
-          std::cout << ")";
-          break;
-        case ACCEPT:
-          std::cout << "ACCEPT";
-          break;
-        case ERROR:
-          std::cout << "ERROR";
-          break;
-        default:
-          std::cout << "UNKNOWN_ACTION_TAG";
-          break;
-      }
-      std::cout << "\n";
+  // Collect all terminal symbols for ACTION table columns
+  std::set<int> terminals;
+  for (const auto& state_actions : ACTION) {
+    for (const auto& entry : state_actions) {
+      terminals.insert(entry.first);
     }
   }
 
-  std::cout << "\n=== GOTO Table ===\n";
-  for (size_t i = 0; i < GOTO_TBL.size(); ++i) {
-    if (GOTO_TBL[i].empty())  continue; // Skip states with no GOTO entries
-    std::cout << "State " << i << ":\n";
-    for (const auto& entry : GOTO_TBL[i]) {
-      int nonterminal_symbol = entry.first;
-      int target_state = entry.second;
-      std::cout << "  GOTO[" << symbol_name(nonterminal_symbol) << "] = " << target_state << "\n";
+  // Collect all non-terminal symbols for GOTO table columns
+  std::set<int> non_terminals;
+  for (const auto& state_gotos : GOTO_TBL) {
+    for (const auto& entry : state_gotos) {
+      non_terminals.insert(entry.first);
     }
   }
+
+  // Print ACTION table in 2D format
+  std::cout << "\n=== ACTION Table ===\n";
+  
+  // Print header row with terminal symbols
+  std::cout << std::setw(6) << "State";
+  for (int symbol : terminals) {
+    std::cout << " | " << std::setw(14) << symbol_name(symbol);
+  }
+  std::cout << "\n";
+  
+  // Print separator line
+  std::cout << std::string(6, '-');
+  for (size_t i = 0; i < terminals.size(); ++i) {
+    std::cout << "-+-" << std::string(14, '-');
+  }
+  std::cout << "\n";
+  
+  // Print each state's row
+  for (size_t state = 0; state < ACTION.size(); ++state) {
+    std::cout << std::setw(6) << state;
+    for (int symbol : terminals) {
+      std::cout << " | ";
+      auto it = ACTION[state].find(symbol);
+      if (it != ACTION[state].end()) {
+        const Action& action_obj = it->second;
+        std::string action_str;
+        switch (action_obj.tag) {
+          case SHIFT:
+            action_str = "s" + std::to_string(action_obj.param);
+            break;
+          case REDUCE:
+            action_str = "r" + std::to_string(action_obj.param);
+            break;
+          case ACCEPT:
+            action_str = "acc";
+            break;
+          case ERROR:
+            action_str = "err";
+            break;
+          default:
+            action_str = "?";
+            break;
+        }
+        std::cout << std::setw(14) << action_str;
+      } 
+      else {
+        std::cout << std::setw(14) << " ";
+      }
+    }
+    std::cout << "\n";
+  }
+  
+  // Print GOTO table in 2D format
+  std::cout << "\n=== GOTO Table ===\n";
+  
+  // Print header row with non-terminal symbols
+  std::cout << std::setw(6) << "State";
+  for (int symbol : non_terminals) {
+    std::cout << " | " << std::setw(14) << symbol_name(symbol);
+  }
+  std::cout << "\n";
+  
+  // Print separator line
+  std::cout << std::string(6, '-');
+  for (size_t i = 0; i < non_terminals.size(); ++i) {
+    std::cout << "-+-" << std::string(14, '-');
+  }
+  std::cout << "\n";
+  
+  // Print each state's row
+  for (size_t state = 0; state < GOTO_TBL.size(); ++state) {
+    std::cout << std::setw(6) << state;
+    for (int symbol : non_terminals) {
+      std::cout << " | ";
+      auto it = GOTO_TBL[state].find(symbol);
+      if (it != GOTO_TBL[state].end()) {
+        std::cout << std::setw(14) << it->second;
+      } 
+      else {
+        std::cout << std::setw(14) << " ";
+      }
+    }
+    std::cout << "\n";
+  }
+  
   std::cout << std::endl;
 }
 
