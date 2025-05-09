@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
   std::cout << std::endl;
 
   // Print parsing tables before exiting
-  print_parsing_tables();
+  // print_parsing_tables();
 
   return 0;
 }

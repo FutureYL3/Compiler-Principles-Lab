@@ -1,0 +1,437 @@
+Syntax error at line 6, col 7. Unexpected token: := (type: ASSIGN)
+  Discarding token: := (ASSIGN)
+  Discarding token: 8 (INT)
+  Found synchronization token ; (SEMI). Attempting to resume.
+  Resuming parse from state 60 with token ; (SEMI)
+=== AST ===
+Program
+  FunctionList
+    Function
+      BEGIN
+      Stmt
+        DeclStmt
+          VAR
+          IdList
+            ID
+            IdRest
+              COMMA
+              ID
+              IdRest
+                COMMA
+                ID
+                IdRest
+                  COMMA
+                  ID
+                  IdRest
+                    COMMA
+                    ID
+                    IdRest
+      SEMI
+      Stmt
+        AssignStmt
+          ID
+          ASSIGN
+          RelExpr
+            Expr
+              Term
+                Factor
+                  INT
+                TermRest
+              ExprRest
+            RelRest
+      SEMI
+      StmtList
+        ID
+        OptSemiStmtList
+          ASSIGN
+          ID
+          OptSemiStmtList
+            SEMI
+            Stmt
+              AssignStmt
+                ID
+                ASSIGN
+                RelExpr
+                  Expr
+                    Term
+                      Factor
+                        INT
+                      TermRest
+                    ExprRest
+                  RelRest
+            OptSemiStmtList
+              SEMI
+              Stmt
+                WhileStmt
+                  WHILE
+                  RelExpr
+                    Expr
+                      Term
+                        Factor
+                          ID
+                        TermRest
+                      ExprRest
+                    RelRest
+                      LT
+                      Expr
+                        Term
+                          Factor
+                            ID
+                          TermRest
+                        ExprRest
+                  DO
+                  StmtList
+                    Stmt
+                      IfStmt
+                        IF
+                        RelExpr
+                          Expr
+                            Term
+                              Factor
+                                ID
+                              TermRest
+                            ExprRest
+                          RelRest
+                            LT
+                            Expr
+                              Term
+                                Factor
+                                  ID
+                                TermRest
+                              ExprRest
+                        THEN
+                        StmtList
+                          Stmt
+                            AssignStmt
+                              ID
+                              ASSIGN
+                              RelExpr
+                                Expr
+                                  Term
+                                    Factor
+                                      ID
+                                    TermRest
+                                  ExprRest
+                                RelRest
+                          OptSemiStmtList
+                            SEMI
+                        END
+                        IF
+                    OptSemiStmtList
+                      SEMI
+                      Stmt
+                        IfStmt
+                          IF
+                          RelExpr
+                            Expr
+                              Term
+                                Factor
+                                  ID
+                                TermRest
+                              ExprRest
+                            RelRest
+                              LT
+                              Expr
+                                Term
+                                  Factor
+                                    INT
+                                  TermRest
+                                ExprRest
+                          THEN
+                          StmtList
+                            Stmt
+                              WhileStmt
+                                WHILE
+                                RelExpr
+                                  Expr
+                                    Term
+                                      Factor
+                                        ID
+                                      TermRest
+                                    ExprRest
+                                  RelRest
+                                    GT
+                                    Expr
+                                      Term
+                                        Factor
+                                          ID
+                                        TermRest
+                                      ExprRest
+                                DO
+                                StmtList
+                                  Stmt
+                                    AssignStmt
+                                      ID
+                                      ASSIGN
+                                      RelExpr
+                                        Expr
+                                          Term
+                                            Factor
+                                              ID
+                                            TermRest
+                                          ExprRest
+                                            PLUS
+                                            Term
+                                              Factor
+                                                INT
+                                              TermRest
+                                            ExprRest
+                                        RelRest
+                                  OptSemiStmtList
+                                    SEMI
+                                    Stmt
+                                      AssignStmt
+                                        ID
+                                        ASSIGN
+                                        RelExpr
+                                          Expr
+                                            Term
+                                              Factor
+                                                ID
+                                              TermRest
+                                            ExprRest
+                                              MINUS
+                                              Term
+                                                Factor
+                                                  INT
+                                                TermRest
+                                              ExprRest
+                                          RelRest
+                                    OptSemiStmtList
+                                      SEMI
+                                END
+                                WHILE
+                            OptSemiStmtList
+                              SEMI
+                          ELSE
+                          StmtList
+                            Stmt
+                              AssignStmt
+                                ID
+                                ASSIGN
+                                RelExpr
+                                  Expr
+                                    Term
+                                      Factor
+                                        ID
+                                      TermRest
+                                    ExprRest
+                                  RelRest
+                            OptSemiStmtList
+                              SEMI
+                          END
+                          IF
+                      OptSemiStmtList
+                        SEMI
+                        Stmt
+                          AssignStmt
+                            ID
+                            ASSIGN
+                            RelExpr
+                              Expr
+                                Term
+                                  Factor
+                                    ID
+                                  TermRest
+                                ExprRest
+                                  PLUS
+                                  Term
+                                    Factor
+                                      INT
+                                    TermRest
+                                  ExprRest
+                              RelRest
+                        OptSemiStmtList
+                          SEMI
+                  END
+                  WHILE
+              OptSemiStmtList
+                SEMI
+                Stmt
+                  ReturnStmt
+                    RETURN
+                    RelExpr
+                      Expr
+                        Term
+                          Factor
+                            ID
+                          TermRest
+                        ExprRest
+                      RelRest
+                OptSemiStmtList
+                  SEMI
+      END
+    FunctionList
+=== Production sequence (bottom-up) ===
+IdRest -> ε
+IdRest -> COMMA ID IdRest
+IdRest -> COMMA ID IdRest
+IdRest -> COMMA ID IdRest
+IdRest -> COMMA ID IdRest
+IdList -> ID IdRest
+DeclStmt -> VAR IdList
+Stmt -> DeclStmt
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> LT Expr
+RelExpr -> Expr RelRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> LT Expr
+RelExpr -> Expr RelRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+IfStmt -> IF RelExpr THEN StmtList END IF
+Stmt -> IfStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> LT Expr
+RelExpr -> Expr RelRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> GT Expr
+RelExpr -> Expr RelRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+ExprRest -> PLUS Term ExprRest
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+ExprRest -> MINUS Term ExprRest
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+StmtList -> Stmt OptSemiStmtList
+WhileStmt -> WHILE RelExpr DO StmtList END WHILE
+Stmt -> WhileStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+IfStmt -> IF RelExpr THEN StmtList ELSE StmtList END IF
+Stmt -> IfStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+ExprRest -> PLUS Term ExprRest
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+StmtList -> Stmt OptSemiStmtList
+WhileStmt -> WHILE RelExpr DO StmtList END WHILE
+Stmt -> WhileStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+ReturnStmt -> RETURN RelExpr
+Stmt -> ReturnStmt
+OptSemiStmtList -> SEMI
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+StmtList -> Stmt OptSemiStmtList
+Function -> FUNCTION ID LPAREN RPAREN BEGIN StmtList END
+FunctionList -> ε
+FunctionList -> Function FunctionList
+Program -> FunctionList
+
