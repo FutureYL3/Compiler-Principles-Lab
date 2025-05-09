@@ -7,6 +7,8 @@
 #include <common.h>
 #include <vector>
 #include <cstdio>
+#include <iostream>
+#include <iomanip>
 
 /* 深度打印 AST */
 static void print_ast(const AST *n, int indent = 0) {
@@ -24,6 +26,66 @@ static void print_ast(const AST *n, int indent = 0) {
   for (const auto &c : n->child) {
     print_ast(c.get(), indent + 1);
   }
+}
+
+// Function to print the ACTION and GOTO tables
+static void print_parsing_tables() {
+  std::cout << "\n=== ACTION Table ===\n";
+  for (size_t i = 0; i < ACTION.size(); ++i) {
+    if (ACTION[i].empty())  continue; // Skip states with no ACTION entries if desired, or print "State i: (empty)"
+    std::cout << "State " << i << ":\n";
+    for (const auto& entry : ACTION[i]) {
+      int terminal_symbol = entry.first;
+      const Action& action_obj = entry.second;
+      std::cout << "  ACTION[" << symbol_name(terminal_symbol) << "] = ";
+      switch (action_obj.tag) {
+        case SHIFT:
+          std::cout << "SHIFT " << action_obj.param;
+          break;
+        case REDUCE:
+          std::cout << "REDUCE " << action_obj.param << " (";
+          if (action_obj.param >= 0 && static_cast<size_t>(action_obj.param) < G.size()) {
+            const auto& prod = G[action_obj.param];
+            std::cout << symbol_name(prod.lhs) << " ->";
+            if (prod.rhs.empty()) {
+              std::cout << " ε";
+            } 
+            else {
+              for (int sym : prod.rhs) {
+                std::cout << " " << symbol_name(sym);
+              }
+            }
+          } 
+          else {
+            std::cout << "Invalid Production Index";
+          }
+          std::cout << ")";
+          break;
+        case ACCEPT:
+          std::cout << "ACCEPT";
+          break;
+        case ERROR:
+          std::cout << "ERROR";
+          break;
+        default:
+          std::cout << "UNKNOWN_ACTION_TAG";
+          break;
+      }
+      std::cout << "\n";
+    }
+  }
+
+  std::cout << "\n=== GOTO Table ===\n";
+  for (size_t i = 0; i < GOTO_TBL.size(); ++i) {
+    if (GOTO_TBL[i].empty())  continue; // Skip states with no GOTO entries
+    std::cout << "State " << i << ":\n";
+    for (const auto& entry : GOTO_TBL[i]) {
+      int nonterminal_symbol = entry.first;
+      int target_state = entry.second;
+      std::cout << "  GOTO[" << symbol_name(nonterminal_symbol) << "] = " << target_state << "\n";
+    }
+  }
+  std::cout << std::endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -95,5 +157,9 @@ int main(int argc, char *argv[]) {
     }
   }
   std::cout << std::endl;
+
+  // Print parsing tables before exiting
+  print_parsing_tables();
+
   return 0;
 }
