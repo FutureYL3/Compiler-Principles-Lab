@@ -1,0 +1,238 @@
+=== AST ===
+Program
+  FunctionList
+    Function
+      FUNCTION
+      ID
+      LPAREN
+      RPAREN
+      BEGIN
+      StmtList
+        Stmt
+          DeclStmt
+            VAR
+            IdList
+              ID
+              IdRest
+                COMMA
+                ID
+                IdRest
+        OptSemiStmtList
+          SEMI
+          Stmt
+            AssignStmt
+              ID
+              ASSIGN
+              RelExpr
+                Expr
+                  Term
+                    Factor
+                      INT
+                    TermRest
+                  ExprRest
+                RelRest
+          OptSemiStmtList
+            SEMI
+            Stmt
+              AssignStmt
+                ID
+                ASSIGN
+                RelExpr
+                  Expr
+                    Term
+                      Factor
+                        INT
+                      TermRest
+                    ExprRest
+                  RelRest
+            OptSemiStmtList
+              SEMI
+              Stmt
+                IfStmt
+                  IF
+                  RelExpr
+                    Expr
+                      Term
+                        Factor
+                          ID
+                        TermRest
+                      ExprRest
+                    RelRest
+                      LT
+                      Expr
+                        Term
+                          Factor
+                            INT
+                          TermRest
+                        ExprRest
+                  THEN
+                  StmtList
+                    Stmt
+                      IfStmt
+                        IF
+                        RelExpr
+                          Expr
+                            Term
+                              Factor
+                                ID
+                              TermRest
+                            ExprRest
+                          RelRest
+                            GT
+                            Expr
+                              Term
+                                Factor
+                                  INT
+                                TermRest
+                              ExprRest
+                        THEN
+                        StmtList
+                          Stmt
+                            AssignStmt
+                              ID
+                              ASSIGN
+                              RelExpr
+                                Expr
+                                  Term
+                                    Factor
+                                      INT
+                                    TermRest
+                                  ExprRest
+                                RelRest
+                          OptSemiStmtList
+                            SEMI
+                        ELSE
+                        StmtList
+                          Stmt
+                            AssignStmt
+                              ID
+                              ASSIGN
+                              RelExpr
+                                Expr
+                                  Term
+                                    Factor
+                                      INT
+                                    TermRest
+                                  ExprRest
+                                RelRest
+                          OptSemiStmtList
+                            SEMI
+                        END
+                        IF
+                    OptSemiStmtList
+                      SEMI
+                  END
+                  IF
+              OptSemiStmtList
+                SEMI
+                Stmt
+                  ReturnStmt
+                    RETURN
+                    RelExpr
+                      Expr
+                        Term
+                          Factor
+                            ID
+                          TermRest
+                        ExprRest
+                      RelRest
+                OptSemiStmtList
+                  SEMI
+      END
+    FunctionList
+=== Production sequence (bottom-up) ===
+IdRest -> ε
+IdRest -> COMMA ID IdRest
+IdList -> ID IdRest
+DeclStmt -> VAR IdList
+Stmt -> DeclStmt
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> LT Expr
+RelExpr -> Expr RelRest
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> GT Expr
+RelExpr -> Expr RelRest
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+Factor -> INT
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+AssignStmt -> ID ASSIGN RelExpr
+Stmt -> AssignStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+IfStmt -> IF RelExpr THEN StmtList ELSE StmtList END IF
+Stmt -> IfStmt
+OptSemiStmtList -> SEMI
+StmtList -> Stmt OptSemiStmtList
+IfStmt -> IF RelExpr THEN StmtList END IF
+Stmt -> IfStmt
+Factor -> ID
+TermRest -> ε
+Term -> Factor TermRest
+ExprRest -> ε
+Expr -> Term ExprRest
+RelRest -> ε
+RelExpr -> Expr RelRest
+ReturnStmt -> RETURN RelExpr
+Stmt -> ReturnStmt
+OptSemiStmtList -> SEMI
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+OptSemiStmtList -> SEMI Stmt OptSemiStmtList
+StmtList -> Stmt OptSemiStmtList
+Function -> FUNCTION ID LPAREN RPAREN BEGIN StmtList END
+FunctionList -> ε
+FunctionList -> Function FunctionList
+Program -> FunctionList
+
