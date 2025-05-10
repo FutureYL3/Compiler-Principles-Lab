@@ -1,0 +1,13 @@
+function main() begin
+    var x, y;
+    x := 5;
+    y := 0;
+    if x > 0 then
+        if x > 10 then
+            y := 1;
+        end if;
+    else
+        y := 2;
+    end if;
+    return y;
+end
